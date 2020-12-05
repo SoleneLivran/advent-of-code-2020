@@ -34,5 +34,23 @@ foreach ($boardingPasses as $boardingPass) {
     $seatsIds[] = $seatId;
 }
 
-$highestSeat = max($seatsIds);
-echo $highestSeat;
+// pour chaque row de 0 a 127
+for ($planeRow = 0; $planeRow <= 127; $planeRow ++) {
+    // pour chaque column
+    for ($planeColumn = 0; $planeColumn <= 7; $planeColumn ++) {
+
+        // générer l'ID de la place et celles autour
+        $seat = $planeRow * 8 + $planeColumn;
+        $previousSeat = $planeRow * 8 + $planeColumn - 1;
+        $nextSeat = $planeRow * 8 + $planeColumn + 1;
+        //  et voir si la place est dans la liste
+        if (in_array($seat, $seatsIds) === false) {
+            // si non :
+            // si +1 existe et -1 existe : C'est ma place
+            if (in_array($nextSeat, $seatsIds) === true && in_array($previousSeat, $seatsIds) === true) {
+                echo "my seat = " . $seat;
+            }
+        }
+    }
+}
+
